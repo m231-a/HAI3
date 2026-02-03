@@ -16,6 +16,7 @@ React 19 introduces performance improvements, new hooks, and simplifies ref forw
 - **Code changes:**
   - Remove `React.FC` from 11 icon components (React 19 removes implicit children)
   - Remove `React.FC` from DropdownMenu component
+  - Replace `JSX.Element` with `ReactElement` (React 19 no longer exposes JSX namespace globally)
   - Update peer dependencies in @hai3/uikit and @hai3/react packages
 
 - **Deferred to Phase 2:**
@@ -33,10 +34,12 @@ React 19 introduces performance improvements, new hooks, and simplifies ref forw
 - `packages/react/package.json` - Dev dependencies
 - `packages/uikit/src/icons/*.tsx` (11 files) - Remove React.FC
 - `packages/uikit/src/base/dropdown-menu.tsx` - Remove React.FC
+- `packages/react/src/contexts/RouteParamsContext.tsx` - Replace JSX.Element with ReactElement
 
 **Breaking changes:**
 - None for consumers (React 19 is backward compatible with React 18 patterns)
 - Internal: React.FC no longer includes implicit children prop
+- Internal: JSX namespace no longer exposed globally (use ReactElement from React instead)
 
 **Compatibility:**
 - All 23 Radix UI packages verified compatible with React 19

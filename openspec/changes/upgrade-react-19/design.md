@@ -38,6 +38,32 @@ const Icon = (props: React.SVGProps<SVGSVGElement>) => { ... }
 
 **Impact:** 11 icon components + 1 dropdown component must migrate.
 
+### JSX Namespace Changes
+
+**What changed:** React 19 no longer exposes the `JSX` namespace globally.
+
+**React 18 behavior:**
+```typescript
+function Component(): JSX.Element { ... }
+// JSX namespace available globally
+```
+
+**React 19 behavior:**
+```typescript
+function Component(): JSX.Element { ... }
+// Error: Cannot find namespace 'JSX'
+```
+
+**Migration:**
+```typescript
+import { type ReactElement } from 'react';
+
+function Component(): ReactElement { ... }
+// Or omit return type (TypeScript infers correctly)
+```
+
+**Impact:** 1 file (`packages/react/src/contexts/RouteParamsContext.tsx`) requires migration.
+
 ### forwardRef Patterns (Deferred)
 
 **What's changing:** React 19 allows refs as standard props, deprecating forwardRef wrapper.
@@ -74,7 +100,7 @@ const Button = ({ ref, ...props }: ButtonProps & { ref?: Ref<HTMLButtonElement> 
 | react-redux | 9.1.0 | (no change) | ✅ Compatible with React 19 |
 | @radix-ui/* (23 packages) | v1.x-v2.x | (no change) | ✅ Verified React 19 compatible |
 | react-hook-form | 7.68.0 | (no change) | ✅ Compatible |
-| lucide-react | 0.344.0 | (no change) | ✅ Compatible |
+| lucide-react | 0.344.0 | 0.563.0 | ✅ React 19 support added in 0.450.0 |
 
 **Key findings:**
 - Redux Toolkit 2.2.1 has React 18 peer dependency constraints

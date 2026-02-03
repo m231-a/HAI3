@@ -33,18 +33,21 @@
 ## 4. Fix DropdownMenu Component
 - [x] Update `packages/uikit/src/base/dropdown-menu.tsx` to remove React.FC
 
-## 5. Type Checking & Compilation
+## 5. Fix JSX Namespace Issues (React 19 Compatibility)
+- [x] Replace `JSX.Element` with `ReactElement` in `packages/react/src/contexts/RouteParamsContext.tsx`
+
+## 6. Type Checking & Compilation
 - [x] Run `npm run type-check` - expect zero errors
 - [x] Run `npm run type-check:packages` - expect zero errors
 - [x] Run `npm run build:packages` - expect clean build
 
-## 6. Architecture & Linting Validation
+## 7. Architecture & Linting Validation
 - [x] Run `npm run arch:check` - expect all checks pass
 - [x] Run `npm run arch:deps` - expect no dependency violations
 - [x] Run `npm run arch:sdk` - expect SDK layer rules pass
 - [x] Run `npm run lint` - manually verified (pre-commit hooks passed)
 
-## 7. Manual Testing
+## 8. Manual Testing
 - [x] Start dev server with `npm run dev`
 - [x] Test forms and inputs (focus management, validation)
 - [x] Test Radix UI components (dropdowns, dialogs, tabs, accordion)
@@ -54,11 +57,11 @@
 - [x] Test navigation between screens
 - [x] Test theme switching
 
-## 8. Documentation Updates
+## 9. Documentation Updates
 - [x] Update `openspec/project.md` - change "React 18" to "React 19"
 - [x] Update README files mentioning React version requirements (studio, uikit)
 
-## 9. Final Validation
+## 10. Final Validation
 
 - [x] All implementation tasks completed
 - [x] No TypeScript errors
