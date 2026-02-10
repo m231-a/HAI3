@@ -23,6 +23,7 @@ export default [
       'packages/**/templates/**', // CLI templates are build artifacts
       'packages/cli/template-sources/**', // CLI template sources (linted separately in standalone)
       'scripts/**', // Monorepo scripts
+      '**/.vitepress/**',
       // Legacy config files (still used by dependency-cruiser)
       '.dependency-cruiser.cjs',
     ],
