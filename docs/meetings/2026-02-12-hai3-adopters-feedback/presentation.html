@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAI3 Adopters Feedback Session</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide {
+            background: white;
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            max-height: 800px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 60px 80px;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: auto;
+        }
+
+        .slide.active {
+            display: flex;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-number {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            font-size: 14px;
+            color: #999;
+            font-weight: 500;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 0.5em;
+            color: #667eea;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 0.8em;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.3em;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            margin-bottom: 0.5em;
+            color: #764ba2;
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            color: #666;
+            text-align: center;
+            margin-bottom: 1em;
+        }
+
+        .version {
+            font-size: 1.2em;
+            color: #999;
+            text-align: center;
+            margin-top: 2em;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            font-size: 1.3em;
+            margin: 0.8em 0;
+            padding-left: 2em;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .icon {
+            font-size: 1.3em;
+            margin-right: 0.3em;
+        }
+
+        .box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 1.5em;
+            margin: 1em 0;
+            border-radius: 8px;
+        }
+
+        .box.warning {
+            border-left-color: #f59e0b;
+            background: #fffbeb;
+        }
+
+        .box.success {
+            border-left-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin: 2em 0;
+            flex-wrap: wrap;
+        }
+
+        .timeline-item {
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+            margin: 0.5em;
+        }
+
+        .timeline-time {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1em;
+        }
+
+        .timeline-text {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 0.5em;
+        }
+
+        .questions {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2em;
+            border-radius: 12px;
+            margin: 1em 0;
+        }
+
+        .questions h3 {
+            color: white;
+            margin-bottom: 1em;
+        }
+
+        .question-item {
+            font-size: 1.2em;
+            margin: 1em 0;
+            padding: 1em;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 30px;
+            color: white;
+            font-size: 14px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .controls kbd {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .speaker-notes {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            max-width: 800px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            z-index: 999;
+        }
+
+        .speaker-notes.visible {
+            display: block;
+        }
+
+        .speaker-notes h4 {
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+
+        .speaker-notes p {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2em;
+            margin: 1em 0;
+        }
+
+        .highlight {
+            background: #fef3c7;
+            padding: 0.2em 0.5em;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .center-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .large-text {
+            font-size: 2em;
+            margin: 1em 0;
+        }
+
+        .discussion-box {
+            background: #fffbeb;
+            border: 2px solid #f59e0b;
+            border-radius: 12px;
+            padding: 1.5em;
+            margin: 1em 0;
+        }
+
+        .discussion-box h4 {
+            color: #f59e0b;
+            margin-bottom: 0.5em;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px;
+            }
+            h1 {
+                font-size: 2.5em;
+            }
+            h2 {
+                font-size: 2em;
+            }
+            li {
+                font-size: 1.1em;
+            }
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Slide 1: Title -->
+        <div class="slide active" data-slide="1">
+            <div class="center-content">
+                <h1>HAI3 Adopters<br/>Feedback Session</h1>
+                <p class="subtitle">Practical Frontend Development with HAI3</p>
+                <p class="version">v0.1.0 Early Preview • 35 minutes</p>
+            </div>
+            <div class="slide-number">1 / 18</div>
+        </div>
+
+        <!-- Slide 2: Meeting Purpose -->
+        <div class="slide" data-slide="2">
+            <h2>Why We're Here</h2>
+            <ul>
+                <li><span class="icon">🎯</span> Gather practical <strong>frontend development</strong> feedback</li>
+                <li><span class="icon">🎯</span> Understand real-world pain points</li>
+                <li><span class="icon">🎯</span> Clarify <strong>frontend/backend separation</strong></li>
+                <li><span class="icon">🎯</span> Make HAI3 powerful AND practical</li>
+            </ul>
+            <div class="box warning" style="margin-top: 2em;">
+                <p style="font-size: 1.2em; text-align: center;">
+                    <strong>Focus:</strong> HAI3 handles the <strong>frontend</strong>. We'll discuss backend integration points and clarify boundaries.
+                </p>
+            </div>
+            <div class="slide-number">2 / 18</div>
+        </div>
+
+        <!-- Slide 3: Where We Are -->
+        <div class="slide" data-slide="3">
+            <h2>HAI3 Current State</h2>
+            <div class="box">
+                <p style="font-size: 1.2em; margin-bottom: 1em;">
+                    <strong>Version:</strong> 0.1.0 (Early Preview)<br/>
+                    <strong>Completion:</strong> ~70%
+                </p>
+            </div>
+            <div class="two-column">
+                <div>
+                    <h3 style="color: #10b981;">✅ COMPLETE</h3>
+                    <ul style="font-size: 1.1em;">
+                        <li>4-Layer SDK Architecture</li>
+                        <li>Core packages (11 packages)</li>
+                        <li>CLI tooling</li>
+                        <li>Event-driven architecture</li>
+                        <li>AI guidelines & ESLint rules</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #f59e0b;">🚧 IN PROGRESS</h3>
+                    <ul style="font-size: 1.1em;">
+                        <li>RBAC</li>
+                        <li>Testing infrastructure</li>
+                        <li>Electron build</li>
+                        <li>Documentation completion</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">3 / 18</div>
+        </div>
+
+        <!-- Slide 4: Meeting Format -->
+        <div class="slide" data-slide="4">
+            <h2>Agenda (35 minutes)</h2>
+            <ul style="font-size: 1.2em;">
+                <li><strong>5 Topics</strong> with immediate discussion after each
+                    <br/><span style="font-size: 0.8em; color: #666; margin-left: 2em;">4 min presentation + 2 min discussion = 6 min per topic (30 min total)</span>
+                </li>
+                <li><strong>Final Discussion:</strong> Frontend/Backend separation
+                    <br/><span style="font-size: 0.8em; color: #666; margin-left: 2em;">3 minutes</span>
+                </li>
+                <li><strong>Quick Wins & Priorities</strong>
+                    <br/><span style="font-size: 0.8em; color: #666; margin-left: 2em;">2 minutes</span>
+                </li>
+            </ul>
+            <div class="box" style="margin-top: 2em;">
+                <p style="font-size: 1.2em; text-align: center;">
+                    <strong>New Format:</strong> Discussion happens <span class="highlight">immediately after each topic</span> while it's fresh!
+                </p>
+            </div>
+            <div class="slide-number">4 / 18</div>
+        </div>
+
+        <!-- Slide 5: Topic Questions -->
+        <div class="slide" data-slide="5">
+            <h2>Each Topic: 4 min presentation</h2>
+            <div class="questions">
+                <div class="question-item">
+                    <strong>1️⃣ What is it?</strong><br/>
+                    Brief description of what you worked with
+                </div>
+                <div class="question-item">
+                    <strong>2️⃣ Why we use/will use it?</strong><br/>
+                    The problem it solves or value it provides
+                </div>
+                <div class="question-item">
+                    <strong>3️⃣ What you LIKE?</strong><br/>
+                    Strengths, surprises, "aha moments"
+                </div>
+                <div class="question-item">
+                    <strong>4️⃣ What you DISLIKE?</strong><br/>
+                    Pain points, friction, missing features
+                </div>
+            </div>
+            <div class="box" style="margin-top: 1em;">
+                <p style="text-align: center;">Then: <strong>2 minutes group discussion</strong> on that topic</p>
+            </div>
+            <div class="slide-number">5 / 18</div>
+        </div>
+
+        <!-- Slide 6: Topic Overview -->
+        <div class="slide" data-slide="6">
+            <h2>5 Topics (Frontend Focus)</h2>
+            <ul>
+                <li><span class="icon">🏗️</span> <strong>Topic 1:</strong> Architecture & Packages<br/>
+                    <span style="font-size: 0.8em; color: #666; margin-left: 2em;">4-layer SDK, imports, dependencies</span>
+                </li>
+                <li><span class="icon">📱</span> <strong>Topic 2:</strong> Screen Development Workflow<br/>
+                    <span style="font-size: 0.8em; color: #666; margin-left: 2em;">Screensets, Draft→Mockup→Production</span>
+                </li>
+                <li><span class="icon">🔧</span> <strong>Topic 3:</strong> Developer Experience & Tooling<br/>
+                    <span style="font-size: 0.8em; color: #666; margin-left: 2em;">CLI, AI guidelines, IDE integration</span>
+                </li>
+                <li><span class="icon">⚡</span> <strong>Topic 4:</strong> Event-Driven Architecture<br/>
+                    <span style="font-size: 0.8em; color: #666; margin-left: 2em;">EventBus, Redux, state management</span>
+                </li>
+                <li><span class="icon">🎨</span> <strong>Topic 5:</strong> Styling & Components<br/>
+                    <span style="font-size: 0.8em; color: #666; margin-left: 2em;">UI Kit, themes, Tailwind CSS</span>
+                </li>
+            </ul>
+            <div class="slide-number">6 / 18</div>
+        </div>
+
+        <!-- Slide 7: Topic 1 Presentation -->
+        <div class="slide" data-slide="7">
+            <h2>🏗️ TOPIC 1 - Presentation</h2>
+            <h3>Architecture & Packages</h3>
+            <div class="box">
+                <h4 style="margin-bottom: 1em;">Focus Areas:</h4>
+                <ul>
+                    <li>4-layer architecture (SDK → Framework → React → App)</li>
+                    <li>Package structure and dependencies</li>
+                    <li>Layer separation enforcement</li>
+                    <li>Import rules (relative paths, @/, @hai3/*)</li>
+                </ul>
+            </div>
+            <p class="large-text" style="text-align: center; color: #667eea;">⏱️ 4 minutes</p>
+            <div class="slide-number">7 / 18</div>
+        </div>
+
+        <!-- Slide 8: Topic 1 Discussion -->
+        <div class="slide" data-slide="8">
+            <h2>🏗️ TOPIC 1 - Discussion</h2>
+            <h3>Architecture & Packages</h3>
+            <div class="discussion-box">
+                <h4>Quick Discussion (2 min):</h4>
+                <ul style="font-size: 1.2em;">
+                    <li><strong>Q:</strong> Is the layer separation clear?</li>
+                    <li><strong>Q:</strong> Where do you get confused about imports?</li>
+                    <li><strong>Q:</strong> Any violations caught by ESLint that surprised you?</li>
+                </ul>
+            </div>
+            <div class="box success" style="margin-top: 1em;">
+                <p style="text-align: center;"><strong>Note-taker:</strong> Capture key points and action items</p>
+            </div>
+            <div class="slide-number">8 / 18</div>
+        </div>
+
+        <!-- Slide 9: Topic 2 Presentation -->
+        <div class="slide" data-slide="9">
+            <h2>📱 TOPIC 2 - Presentation</h2>
+            <h3>Screen Development Workflow</h3>
+            <div class="box">
+                <h4 style="margin-bottom: 1em;">Focus Areas:</h4>
+                <ul>
+                    <li>Creating/managing screensets</li>
+                    <li>Draft → Mockup → Production pipeline</li>
+                    <li>AI-assisted screen generation</li>
+                    <li>Screenset switching and management</li>
+                </ul>
+            </div>
+            <p class="large-text" style="text-align: center; color: #667eea;">⏱️ 4 minutes</p>
+            <div class="slide-number">9 / 18</div>
+        </div>
+
+        <!-- Slide 10: Topic 2 Discussion -->
+        <div class="slide" data-slide="10">
+            <h2>📱 TOPIC 2 - Discussion</h2>
+            <h3>Screen Development Workflow</h3>
+            <div class="discussion-box">
+                <h4>Quick Discussion (2 min):</h4>
+                <ul style="font-size: 1.2em;">
+                    <li><strong>Q:</strong> Is the AI workflow practical or theoretical?</li>
+                    <li><strong>Q:</strong> What's the biggest workflow blocker?</li>
+                    <li><strong>Q:</strong> How do you handle API mocks during development?</li>
+                </ul>
+            </div>
+            <div class="box success" style="margin-top: 1em;">
+                <p style="text-align: center;"><strong>Note-taker:</strong> Capture key points and action items</p>
+            </div>
+            <div class="slide-number">10 / 18</div>
+        </div>
+
+        <!-- Slide 11: Topic 3 Presentation -->
+        <div class="slide" data-slide="11">
+            <h2>🔧 TOPIC 3 - Presentation</h2>
+            <h3>Developer Experience & Tooling</h3>
+            <div class="box">
+                <h4 style="margin-bottom: 1em;">Focus Areas:</h4>
+                <ul>
+                    <li>HAI3 CLI usage</li>
+                    <li>AI guidelines integration</li>
+                    <li>IDE integration (Claude Code, Cursor, etc.)</li>
+                    <li>Build/dev/lint commands</li>
+                </ul>
+            </div>
+            <p class="large-text" style="text-align: center; color: #667eea;">⏱️ 4 minutes</p>
+            <div class="slide-number">11 / 18</div>
+        </div>
+
+        <!-- Slide 12: Topic 3 Discussion -->
+        <div class="slide" data-slide="12">
+            <h2>🔧 TOPIC 3 - Discussion</h2>
+            <h3>Developer Experience & Tooling</h3>
+            <div class="discussion-box">
+                <h4>Quick Discussion (2 min):</h4>
+                <ul style="font-size: 1.2em;">
+                    <li><strong>Q:</strong> What CLI feature is most useful?</li>
+                    <li><strong>Q:</strong> What manual work should be automated?</li>
+                    <li><strong>Q:</strong> Are AI guidelines helpful or overwhelming?</li>
+                </ul>
+            </div>
+            <div class="box success" style="margin-top: 1em;">
+                <p style="text-align: center;"><strong>Note-taker:</strong> Capture key points and action items</p>
+            </div>
+            <div class="slide-number">12 / 18</div>
+        </div>
+
+        <!-- Slide 13: Topic 4 Presentation -->
+        <div class="slide" data-slide="13">
+            <h2>⚡ TOPIC 4 - Presentation</h2>
+            <h3>Event-Driven Architecture & State</h3>
+            <div class="box">
+                <h4 style="margin-bottom: 1em;">Focus Areas:</h4>
+                <ul>
+                    <li>EventBus and state management</li>
+                    <li>Redux slice registration</li>
+                    <li>Cross-screenset communication</li>
+                    <li>Event naming conventions</li>
+                </ul>
+            </div>
+            <p class="large-text" style="text-align: center; color: #667eea;">⏱️ 4 minutes</p>
+            <div class="slide-number">13 / 18</div>
+        </div>
+
+        <!-- Slide 14: Topic 4 Discussion -->
+        <div class="slide" data-slide="14">
+            <h2>⚡ TOPIC 4 - Discussion</h2>
+            <h3>Event-Driven Architecture & State</h3>
+            <div class="discussion-box">
+                <h4>Quick Discussion (2 min):</h4>
+                <ul style="font-size: 1.2em;">
+                    <li><strong>Q:</strong> Is EventBus vs Redux distinction clear?</li>
+                    <li><strong>Q:</strong> Is "no direct dispatch" rule too restrictive?</li>
+                    <li><strong>Q:</strong> Cross-screenset communication working?</li>
+                </ul>
+            </div>
+            <div class="box success" style="margin-top: 1em;">
+                <p style="text-align: center;"><strong>Note-taker:</strong> Capture key points and action items</p>
+            </div>
+            <div class="slide-number">14 / 18</div>
+        </div>
+
+        <!-- Slide 15: Topic 5 Presentation -->
+        <div class="slide" data-slide="15">
+            <h2>🎨 TOPIC 5 - Presentation</h2>
+            <h3>Styling, Components & UI Kit</h3>
+            <div class="box">
+                <h4 style="margin-bottom: 1em;">Focus Areas:</h4>
+                <ul>
+                    <li>UI Kit usage and component library</li>
+                    <li>Theme system and customization</li>
+                    <li>Tailwind CSS integration</li>
+                    <li>Style consistency enforcement</li>
+                </ul>
+            </div>
+            <p class="large-text" style="text-align: center; color: #667eea;">⏱️ 4 minutes</p>
+            <div class="slide-number">15 / 18</div>
+        </div>
+
+        <!-- Slide 16: Topic 5 Discussion -->
+        <div class="slide" data-slide="16">
+            <h2>🎨 TOPIC 5 - Discussion</h2>
+            <h3>Styling, Components & UI Kit</h3>
+            <div class="discussion-box">
+                <h4>Quick Discussion (2 min):</h4>
+                <ul style="font-size: 1.2em;">
+                    <li><strong>Q:</strong> What components are missing?</li>
+                    <li><strong>Q:</strong> Is the theme system working well?</li>
+                    <li><strong>Q:</strong> Is "no inline styles" rule too strict?</li>
+                </ul>
+            </div>
+            <div class="box success" style="margin-top: 1em;">
+                <p style="text-align: center;"><strong>Note-taker:</strong> Capture key points and action items</p>
+            </div>
+            <div class="slide-number">16 / 18</div>
+        </div>
+
+        <!-- Slide 17: Frontend/Backend Separation -->
+        <div class="slide" data-slide="17">
+            <h2>Frontend/Backend Separation (3 min)</h2>
+            <div class="two-column">
+                <div class="box success">
+                    <h3 style="color: #10b981;">Frontend (HAI3)</h3>
+                    <ul style="font-size: 1em;">
+                        <li>UI components & layout</li>
+                        <li>Client-side state</li>
+                        <li>Event-driven UI</li>
+                        <li>Screen workflows</li>
+                        <li>Theme & styling</li>
+                        <li>i18n & localization</li>
+                    </ul>
+                </div>
+                <div class="box warning">
+                    <h3 style="color: #f59e0b;">Backend</h3>
+                    <ul style="font-size: 1em;">
+                        <li>Business logic</li>
+                        <li>Data persistence</li>
+                        <li>Auth/Authorization</li>
+                        <li>API endpoints</li>
+                        <li>Real-time (SSE)</li>
+                        <li>Validation</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="discussion-box">
+                <h4>Discussion Questions:</h4>
+                <ul>
+                    <li>Is the API layer abstraction clear?</li>
+                    <li>Are mock APIs sufficient for frontend dev?</li>
+                    <li>Where do developers get confused about boundaries?</li>
+                </ul>
+            </div>
+            <div class="slide-number">17 / 18</div>
+        </div>
+
+        <!-- Slide 18: Quick Wins & Wrap-up -->
+        <div class="slide" data-slide="18">
+            <h2>Quick Wins & Priorities (2 min)</h2>
+            <div class="box">
+                <h3 style="color: #667eea;">Let's vote on:</h3>
+                <ul style="font-size: 1.2em;">
+                    <li><strong>✅ Top 3 Blockers</strong></li>
+                    <li><strong>✅ Quick Wins (1-2 weeks)</strong></li>
+                    <li><strong>✅ Roadmap Adjustments</strong></li>
+                    <li><strong>✅ Documentation Priorities</strong></li>
+                </ul>
+            </div>
+            <div class="box success" style="margin-top: 1em;">
+                <h3 style="color: #10b981;">Next Steps:</h3>
+                <ul style="font-size: 1.1em;">
+                    <li>Today: Meeting summary shared</li>
+                    <li>This week: GitHub issues created</li>
+                    <li>Next 2 weeks: Deliver quick wins</li>
+                    <li>Next meeting: Review progress (2-4 weeks)</li>
+                </ul>
+            </div>
+            <div class="center-content" style="margin-top: 2em;">
+                <p class="large-text">Thank You! 🎉</p>
+            </div>
+            <div class="slide-number">18 / 18</div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <span>Navigate: <kbd>←</kbd> <kbd>→</kbd> or <kbd>Space</kbd></span>
+        <span>•</span>
+        <span>Notes: <kbd>N</kbd></span>
+        <span>•</span>
+        <span>Fullscreen: <kbd>F</kbd></span>
+    </div>
+
+    <div class="speaker-notes" id="speakerNotes">
+        <h4>Speaker Notes</h4>
+        <div id="notesContent"></div>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+        const speakerNotes = {
+            1: "Welcome everyone. This is a listening session focused on FRONTEND development with HAI3. We'll discuss backend integration points and clarify boundaries.",
+            2: "HAI3 is a frontend framework. You handle UI, state, and user interactions. Backend handles business logic, data, and APIs. We'll clarify where confusion exists.",
+            3: "v0.1.0 is early preview - not production ready. Core architecture is solid. Major gaps: RBAC, tests, docs. Your feedback shapes priorities.",
+            4: "NEW FORMAT: After each 4-min topic presentation, we'll have 2 minutes of immediate discussion. This keeps feedback fresh and focused.",
+            5: "Four standard questions per topic. Keep answers specific and concrete. Use examples from your actual work. Then we discuss immediately.",
+            6: "Five topics covering different aspects of HAI3. All are frontend-focused. We'll end with a discussion on frontend/backend separation.",
+            7: "TOPIC 1 PRESENTATION: [Presenter name] shares their experience with architecture and packages. Listen for confusion about layers and imports. 4 minutes.",
+            8: "TOPIC 1 DISCUSSION: Open floor for 2 minutes. Is layer separation clear? Import confusion? ESLint surprises? Capture key points.",
+            9: "TOPIC 2 PRESENTATION: [Presenter name] shares screen development workflow experience. Listen for AI workflow feedback and screenset issues. 4 minutes.",
+            10: "TOPIC 2 DISCUSSION: Open floor for 2 minutes. AI workflow practical? Biggest blocker? API mock handling? Capture key points.",
+            11: "TOPIC 3 PRESENTATION: [Presenter name] shares developer experience. Listen for CLI pain points and AI guideline usefulness. 4 minutes.",
+            12: "TOPIC 3 DISCUSSION: Open floor for 2 minutes. Useful CLI features? Automation opportunities? AI guidelines helpful? Capture key points.",
+            13: "TOPIC 4 PRESENTATION: [Presenter name] shares event-driven architecture experience. Listen for EventBus/Redux confusion. 4 minutes.",
+            14: "TOPIC 4 DISCUSSION: Open floor for 2 minutes. EventBus vs Redux clear? Direct dispatch restriction? Cross-screenset communication? Capture key points.",
+            15: "TOPIC 5 PRESENTATION: [Presenter name] shares styling and components experience. Listen for missing components and theme issues. 4 minutes.",
+            16: "TOPIC 5 DISCUSSION: Open floor for 2 minutes. Missing components? Theme system working? Inline styles rule? Capture key points.",
+            17: "FINAL DISCUSSION on frontend/backend separation. HAI3 handles frontend. Backend handles business logic. Where's the confusion? What's unclear about API layer?",
+            18: "Quick voting on priorities. Show of hands for top blockers, quick wins, roadmap adjustments. Capture top 3 in each category. Assign owners. Thank everyone!"
+        };
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+            updateNotes();
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        function updateNotes() {
+            const slideNum = currentSlide + 1;
+            const notes = speakerNotes[slideNum] || "No notes for this slide.";
+            document.getElementById('notesContent').innerHTML = `<p>${notes}</p>`;
+        }
+
+        function toggleNotes() {
+            const notesEl = document.getElementById('speakerNotes');
+            notesEl.classList.toggle('visible');
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'ArrowRight':
+                case ' ':
+                    e.preventDefault();
+                    nextSlide();
+                    break;
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    prevSlide();
+                    break;
+                case 'n':
+                case 'N':
+                    e.preventDefault();
+                    toggleNotes();
+                    break;
+                case 'f':
+                case 'F':
+                    e.preventDefault();
+                    toggleFullscreen();
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    showSlide(0);
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    showSlide(slides.length - 1);
+                    break;
+            }
+        });
+
+        // Touch support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) {
+                nextSlide();
+            }
+            if (touchEndX - touchStartX > 50) {
+                prevSlide();
+            }
+        });
+
+        // Initialize notes
+        updateNotes();
+    </script>
+</body>
+</html>
