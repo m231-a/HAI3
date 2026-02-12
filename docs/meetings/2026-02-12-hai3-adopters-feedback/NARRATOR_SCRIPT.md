@@ -10,15 +10,18 @@
 
 ### Welcome & Tech Check
 
-> "Good [morning/afternoon] everyone! Let's do a quick tech check before we start. Can everyone hear me okay? If you can, please give a thumbs up or unmute and say yes."
+> "Good [morning/afternoon] everyone! Let's do a quick tech check before we start.
+> Can everyone hear me okay? If you can, please give a thumbs up or unmute and say yes."
 
 *Wait for responses*
 
-> "Perfect. Just a reminder - we'll be recording this session for note-taking purposes only. The recording won't be shared externally. If anyone has concerns about recording, please let me know now."
+> "Perfect. Just a reminder - we'll be recording this session for note-taking purposes only.
+> The recording won't be shared externally. If anyone has concerns about recording, please let me know now."
 
 *Pause for concerns*
 
-> "Great. We'll be starting in about [X] minutes. In the meantime, please make sure you have your prep notes handy - especially the specific examples you wanted to share."
+> "Great. We'll be starting in about [X] minutes.
+> In the meantime, please make sure you have your prep notes handy - especially the specific examples you wanted to share."
 
 ---
 
@@ -26,21 +29,33 @@
 
 ### Introduction
 
-> "Alright, let's get started. Thank you all for joining today's HAI3 Adopters Feedback Session. My name is [Your Name] and I'll be facilitating this 30-minute meeting."
+> "Alright, let's get started. Thank you all for joining today's HAI3 Adopters Feedback Session.
+> My name is [Your Name] and I'll be facilitating this 30-minute meeting."
 
-> "The purpose of this session is simple: you've been using HAI3 in practice, and we need to hear about your real-world experience. What's working? What's not? What's blocking you? Your honest feedback will directly shape our roadmap and priorities."
+> "The purpose of this session is simple: you've been using HAI3 in practice, and we need to hear about your real-world experience.
+> What's working?
+> What's not?
+> What's blocking you?
+> Your honest feedback will directly shape our roadmap and priorities."
 
 ### Ground Rules
 
 > "A few ground rules before we dive in:"
 
-> "First, we're timeboxing strictly. Each speaker has exactly 5 minutes. I'll give you a 1-minute warning, and at 5 minutes, we need to move on. If you have more to share, we'll capture it in the parking lot."
+> "First, we're timeboxing strictly. Each speaker has exactly 5 minutes.
+> I'll give you a 1-minute warning, and at 5 minutes, we need to move on.
+> If you have more to share, we'll capture it in the parking lot."
 
-> "Second, this is a no-judgment zone. We want honest feedback - both positive and negative. If something frustrated you, we want to hear about it. If something delighted you, we also want to hear about that."
+> "Second, this is a no-judgment zone. We want honest feedback - both positive and negative.
+> If something frustrated you, we want to hear about it.
+> If something delighted you, we also want to hear about that."
 
-> "Third, let's stay practical. Share your actual experiences, not theoretical concerns. Concrete examples are gold."
+> "Third, let's stay practical.
+> Share your actual experiences, not theoretical concerns.
+> Concrete examples are gold."
 
-> "Fourth, deep technical discussions go to the parking lot. We'll note them and handle them separately."
+> "Fourth, deep technical discussions go to the parking lot.
+> We'll note them and handle them separately."
 
 > "Everyone comfortable with that format?"
 
@@ -52,13 +67,22 @@
 
 ### Current State
 
-> "Quick context on where we are: HAI3 is currently at version 0.1.0, which is an early preview. We're about 70% complete with the initial release."
+> "Quick context on where we are: HAI3 is currently at version 0.1.0, which is an early preview.
+> We're about 70% complete with the initial release."
 
-> "What IS complete: The 4-layer SDK architecture is solid. All 11 core packages are published and working. The CLI tooling is functional. The event-driven architecture is in place. And we have AI guidelines with custom ESLint rules."
+> "What IS complete: The 4-layer SDK architecture is solid.
+> All 11 core packages are published and working.
+> The CLI tooling is functional.
+> The event-driven architecture is in place.
+> And we have AI guidelines with custom ESLint rules."
 
-> "What's NOT complete: Role-based access control is still in progress. Testing infrastructure is limited. Electron builds aren't ready yet. And documentation has gaps."
+> "What's NOT complete: Role-based access control is still in progress.
+> Testing infrastructure is limited.
+> Electron builds aren't ready yet.
+> And documentation has gaps."
 
-> "So you've been working with an early preview version. That means your feedback is especially valuable because you're helping us shape the direction before we lock things in."
+> "So you've been working with an early preview version.
+> That means your feedback is especially valuable because you're helping us shape the direction before we lock things in."
 
 ---
 
@@ -345,15 +369,18 @@ Use these phrases to redirect when:
 
 ### If Speaker Won't Stop at 5 Minutes
 
-> "I apologize for interrupting [Name], but we need to stay on schedule. Can you give us one final sentence to wrap up?"
+> "I apologize for interrupting [Name], but we need to stay on schedule.
+> Can you give us one final sentence to wrap up?"
 
 ### If Discussion Gets Heated
 
-> "I hear strong opinions on both sides. Let's capture this in the parking lot and discuss it with a clearer head after the meeting."
+> "I hear strong opinions on both sides.
+> Let's capture this in the parking lot and discuss it with a clearer head after the meeting."
 
 ### If Meeting Runs Over
 
-> "We're at time, but this is clearly an important discussion. Can we schedule a 15-minute follow-up for tomorrow to continue?"
+> "We're at time, but this is clearly an important discussion.
+> Can we schedule a 15-minute follow-up for tomorrow to continue?"
 
 ### If No One Speaks Up
 
